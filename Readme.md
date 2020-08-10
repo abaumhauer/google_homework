@@ -20,7 +20,8 @@ Acme Inc has a datacenter at it's facilities in Palo Alto, CA with available har
 * (1) 10GB Fiber Direct connect to Google Colocation facility in San Jose Equinix (SV1)
 * (1) 10GB Connection with MegaPort to QTS in Santa Clara
 
-### Hand drawn diagram goes here -- out of time to make right now
+### High Level Overview
+![Overview Diagram](/images/overview.png)
 
 
 ### Compute (control plane)
@@ -40,6 +41,7 @@ The on-site k8s cluster will have three networks:
 * Three Layer 3 SVI interfaces will have default gateways for the networks mentioned above with IP addresses of 172.16.X.1/32
 * A LoadBalancer (MetalLB) will be hosted on VMs and use the external VM network to provide static IPs for incoming requests from Google to be load-balanced to the nginx server containers supporting WordPress.
 * Google Cloud DNS hosts the domain (zones) for DNS lookup.
+![Google Direct Connect](/images/google-dc.png)
 
 ### Software
 * Helm chart will deploy MariaDB using Galara for multi-master database replication. Three instances of the database will provide redundancy, and protect against split-brain if a network switch/VM fails.
@@ -50,6 +52,7 @@ The on-site k8s cluster will have three networks:
 * Load Balancer in GKE will direct dynamic and un-cached requests to the WordPress pods at the Palo Alto datacenter via the best path connection (either Google DC or MegaPort).
 * TLS cert management is through LetsEncrypt
 * GKE is used to host IAP connector.
+![Request Flow](/images/request_flow.png)
 
 ### Administration
 * Admin domain is created to access management network on-prem. (admin.acme.com).
