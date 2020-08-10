@@ -20,13 +20,16 @@ Acme Inc has a datacenter at it's facilities in Palo Alto, CA with available har
 * (1) 10GB Fiber Direct connect to Google Colocation facility in San Jose Equinix (SV1)
 * (1) 10GB Connection with MegaPort to QTS in Santa Clara
 
+### Hand drawn diagram goes here -- out of time to make right now
+
+
 ### Compute (control plane)
 The physical datacenter will run ESXi hypervisors hosting Google Anthos GKE On-Prem which ties Google's control plane seamlessly between the on-prem data center, and GKE in the cloud. Kubernetes (k8s) will be installed on the VMs hosted on ESXi (KVM is not yet supported). 
 
 ### Storage (Ceph)
 After standing up a local on-prem k8s cluster, Rook.io will provide storage for the cluster. Rook.io allows for simplified management of Ceph. The raw SSDs will provide Ceph Object Storage Devices (OSD) that is used for the persistent database backing store. Rook.io is installed using the Helm operator chart.
 
-### Networking
+### Networking (on-prem access via direct connect)
 The on-site k8s cluster will have three networks: 
 * Internal management network (172.16.0.0/22) as VLAN 1600
 * Internal VM network (172.16.4.0/22) as VLAN 1640
